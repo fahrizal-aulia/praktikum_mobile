@@ -8,16 +8,16 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Products</a>
+                    <a class="nav-link" href="/products/">Products</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Product Category</a>
+                    <a class="nav-link" href="/product-categories/">Product Category</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Brands</a>
+                    <a class="nav-link" href="/brands/">Brands</a>
                 </li>
             </ul>
         </div>

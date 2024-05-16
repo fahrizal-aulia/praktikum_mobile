@@ -3,7 +3,7 @@
 @section('container')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-5 pb-2 mb-3 border-bottom">
     <h1 class="h2">All Products</h1>
-    <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">Add New Product</a>
+    <a href="/products/create" class="btn btn-primary mb-3">Add New Product</a>
 </div>
 
 <div class="container">

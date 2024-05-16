@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\ProductCategory;
+use App\Models\Brand;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 
@@ -23,7 +25,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('product.create',[
+                'categories' => ProductCategory::all(),
+                'brands' => Brand::all()
+            ]);
     }
 
     /**
@@ -31,7 +36,26 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        //
+        $validasi = $request->validate([
+            'sku' => 'required',
+            'product_category' => 'required|integer',
+            'product_name' => 'required',
+            'product_detail' => 'required',
+            'product_brand' => 'required|integer',
+            'product_price' => 'required|integer',
+            'fileimages' => 'nullable|image',
+            'status' => 'required',
+            'deleted' => 'required',
+            'slug' => 'required|unique:products,slug',
+        ]);
+
+        if ($request->hasFile('fileimages')) {
+            $validasi['fileimages'] = $request->file('fileimages')->store('product-images');
+        }
+
+        Product::create($validasi);
+
+        return redirect('/products')->with('success', 'Product added successfully!');
     }
 
     /**
