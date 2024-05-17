@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\Brand;
-use App\Http\Requests\StoreProductRequest;
-use App\Http\Requests\UpdateProductRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -16,7 +16,7 @@ class ProductController extends Controller
     public function index()
     {
         return view('product.index',[
-            'products'=> Product::all()
+            'products'=> Product::with('category', 'brand')->get()
             ]);
     }
 
@@ -34,7 +34,7 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProductRequest $request)
+    public function store(Request $request)
     {
         $validasi = $request->validate([
             'sku' => 'required',
@@ -49,13 +49,13 @@ class ProductController extends Controller
             'slug' => 'required|unique:products,slug',
         ]);
 
-        if ($request->hasFile('fileimages')) {
-            $validasi['fileimages'] = $request->file('fileimages')->store('product-images');
+        if ($request->file('fileimages')) {
+            $validasi['fileimages'] = $request->file('fileimages')->store('upload-gambar');
         }
 
         Product::create($validasi);
 
-        return redirect('/products')->with('success', 'Product added successfully!');
+        return redirect('products')->with('success', 'Product added successfully!');
     }
 
     /**
@@ -63,7 +63,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        return view('product.show',compact('product'));
     }
 
     /**
@@ -71,15 +71,39 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $categories = ProductCategory::all();
+        $brands = Brand::all();
+        return view('product.edit', compact('product', 'categories', 'brands'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(Request $request, Product $product)
     {
-        //
+        $validatedData = $request->validate([
+            'sku' => 'required|string|max:255',
+            'product_category' => 'required|exists:product_categories,id',
+            'product_name' => 'required|string|max:255',
+            'product_detail' => 'required|string',
+            'product_brand' => 'required|exists:brands,id',
+            'product_price' => 'required|integer',
+            'fileimages' => 'image|file|max:1024',
+            'status' => 'required|string',
+            'deleted' => 'required|string',
+            'slug' => 'required|string|max:255|unique:products,slug,' . $product->id,
+        ]);
+
+        if ($request->file('fileimages')) {
+            if ($product->fileimages) {
+                Storage::delete($product->fileimages);
+            }
+            $validatedData['fileimages'] = $request->file('fileimages')->store('product-images');
+        }
+
+        $product->update($validatedData);
+
+        return redirect()->route('products.index')->with('success', 'Product updated successfully!');
     }
 
     /**

@@ -25,9 +25,9 @@
                         <img src="https://via.placeholder.com/150" class="card-img-top" alt="Product 1">
                         <div class="card-body">
                             <h5 class="card-title">{{ $product->product_name }}</h5>
-                            <p class="card-text">Product Category</p>
-                            <p class="card-text">Brands</p>
-                            <p class="card-text">9.99</p>
+                            <p class="card-text">{{ $product->category->product_category_name}}</p>
+                            <p class="card-text">{{ $product->brand->product_brand}}</p>
+                            <p class="card-text">{{ $product->product_price }}</p>
                         </div>
                     </div>
                 </div>

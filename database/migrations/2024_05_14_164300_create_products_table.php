@@ -9,7 +9,7 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    protected $guarded = ['id'];
+
     public function up(): void
     {
         Schema::create('products', function (Blueprint $table) {

@@ -1,17 +1,18 @@
 @extends('layouts.main')
 
 @section('container')
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-5 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Add New Product</h1>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Edit Produk</h1>
 </div>
 
 <div class="container">
     <div class="col-md-8 mb-5 mx-auto">
-        <form action="/products" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
+            @method('PUT')
             <div class="mb-3">
                 <label for="sku" class="form-label">SKU</label>
-                <input type="text" class="form-control @error('sku') is-invalid @enderror" id="sku" name="sku" required value="{{ old('sku') }}">
+                <input type="text" class="form-control @error('sku') is-invalid @enderror" id="sku" name="sku" required value="{{ $product->sku }}">
                 @error('sku')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -19,11 +20,11 @@
                 @enderror
             </div>
             <div class="mb-3">
-                <label for="product_category" class="form-label">Category</label>
+                <label for="product_category" class="form-label">Kategori</label>
                 <select class="form-select @error('product_category') is-invalid @enderror" id="product_category" name="product_category" required>
                     @foreach($categories as $category)
-                        <option value="{{ $category->id }}" {{ old('product_category') == $category->id ? 'selected' : '' }}>
-                            {{ $category->product_category_name }}
+                        <option value="{{ $category->id }}" {{ $product->product_category == $category->id ? 'selected' : '' }}>
+                            {{ $category->nama_kategori }}
                         </option>
                     @endforeach
                 </select>
@@ -34,8 +35,8 @@
                 @enderror
             </div>
             <div class="mb-3">
-                <label for="product_name" class="form-label">Product Name</label>
-                <input type="text" class="form-control @error('product_name') is-invalid @enderror" id="product_name" name="product_name" required value="{{ old('product_name') }}">
+                <label for="product_name" class="form-label">Nama Produk</label>
+                <input type="text" class="form-control @error('product_name') is-invalid @enderror" id="product_name" name="product_name" required value="{{ $product->product_name }}">
                 @error('product_name')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -43,8 +44,8 @@
                 @enderror
             </div>
             <div class="mb-3">
-                <label for="product_detail" class="form-label">Product Detail</label>
-                <textarea class="form-control @error('product_detail') is-invalid @enderror" id="product_detail" name="product_detail" rows="3" required>{{ old('product_detail') }}</textarea>
+                <label for="product_detail" class="form-label">Detail Produk</label>
+                <textarea class="form-control @error('product_detail') is-invalid @enderror" id="product_detail" name="product_detail" rows="3" required>{{ $product->product_detail }}</textarea>
                 @error('product_detail')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -52,11 +53,11 @@
                 @enderror
             </div>
             <div class="mb-3">
-                <label for="product_brand" class="form-label">Brand</label>
+                <label for="product_brand" class="form-label">Merek</label>
                 <select class="form-select @error('product_brand') is-invalid @enderror" id="product_brand" name="product_brand" required>
                     @foreach($brands as $brand)
-                        <option value="{{ $brand->id }}" {{ old('product_brand') == $brand->id ? 'selected' : '' }}>
-                            {{ $brand->product_brand }}
+                        <option value="{{ $brand->id }}" {{ $product->product_brand == $brand->id ? 'selected' : '' }}>
+                            {{ $brand->nama_brand }}
                         </option>
                     @endforeach
                 </select>
@@ -67,8 +68,8 @@
                 @enderror
             </div>
             <div class="mb-3">
-                <label for="product_price" class="form-label">Price</label>
-                <input type="number" class="form-control @error('product_price') is-invalid @enderror" id="product_price" name="product_price" required value="{{ old('product_price') }}">
+                <label for="product_price" class="form-label">Harga</label>
+                <input type="number" class="form-control @error('product_price') is-invalid @enderror" id="product_price" name="product_price" required value="{{ $product->product_price }}">
                 @error('product_price')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -76,14 +77,14 @@
                 @enderror
             </div>
             <div class="mb-3">
-                <label for="fileimages" class="form-label">Product Image</label>
+                <label for="fileimages" class="form-label">Gambar Produk</label>
                 <input type="file" class="form-control" id="fileimages" name="fileimages">
             </div>
             <div class="mb-3">
                 <label for="status" class="form-label">Status</label>
                 <select class="form-select @error('status') is-invalid @enderror" id="status" name="status" required>
-                    <option value="available" {{ old('status') == 'Active' ? 'selected' : '' }}>Active</option>
-                    <option value="unavailable" {{ old('status') == 'Inactive' ? 'selected' : '' }}>Inactive</option>
+                    <option value="available" {{ $product->status == 'available' ? 'selected' : '' }}>Tersedia</option>
+                    <option value="unavailable" {{ $product->status == 'unavailable' ? 'selected' : '' }}>Tidak Tersedia</option>
                 </select>
                 @error('status')
                 <div class="invalid-feedback">
@@ -92,10 +93,10 @@
                 @enderror
             </div>
             <div class="mb-3">
-                <label for="deleted" class="form-label">Deleted</label>
+                <label for="deleted" class="form-label">Dihapus</label>
                 <select class="form-select @error('deleted') is-invalid @enderror" id="deleted" name="deleted" required>
-                    <option value="false" {{ old('deleted') == 'false' ? 'selected' : '' }}>False</option>
-                    <option value="true" {{ old('deleted') == 'true' ? 'selected' : '' }}>True</option>
+                    <option value="false" {{ $product->deleted == 'false' ? 'selected' : '' }}>Tidak</option>
+                    <option value="true" {{ $product->deleted == 'true' ? 'selected' : '' }}>Ya</option>
                 </select>
                 @error('deleted')
                 <div class="invalid-feedback">
@@ -105,17 +106,15 @@
             </div>
             <div class="mb-3">
                 <label for="slug" class="form-label">Slug</label>
-                <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug" required value="{{ old('slug') }}">
+                <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug" required value="{{ $product->slug }}">
                 @error('slug')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
                 @enderror
             </div>
-            <button type="submit" class="btn btn-primary float-end">Add Product</button>
+            <button type="submit" class="btn btn-primary float-end">Perbarui Produk</button>
         </form>
     </div>
 </div>
 @endsection
-
-

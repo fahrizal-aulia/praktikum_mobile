@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductCategory;
-use App\Http\Requests\StoreProductCategoryRequest;
-use App\Http\Requests\UpdateProductCategoryRequest;
+use Illuminate\Http\Request;
+
 
 class ProductCategoryController extends Controller
 {
@@ -27,7 +27,7 @@ class ProductCategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProductCategoryRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -51,7 +51,7 @@ class ProductCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductCategoryRequest $request, ProductCategory $productCategory)
+    public function update(Request $request, ProductCategory $productCategory)
     {
         //
     }
