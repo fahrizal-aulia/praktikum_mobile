@@ -55,7 +55,7 @@ class ProductController extends Controller
 
         Product::create($validasi);
 
-        return redirect('products')->with('success', 'Product added successfully!');
+        return redirect('products')->with('success', 'Product Telah Ditambahkan!');
     }
 
     /**
@@ -81,7 +81,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        $validatedData = $request->validate([
+        $validasi = $request->validate([
             'sku' => 'required|string|max:255',
             'product_category' => 'required|exists:product_categories,id',
             'product_name' => 'required|string|max:255',
@@ -98,12 +98,12 @@ class ProductController extends Controller
             if ($product->fileimages) {
                 Storage::delete($product->fileimages);
             }
-            $validatedData['fileimages'] = $request->file('fileimages')->store('product-images');
+            $validasi['fileimages'] = $request->file('fileimages')->store('product-images');
         }
 
-        $product->update($validatedData);
+        $product->update($validasi);
 
-        return redirect()->route('products.index')->with('success', 'Product updated successfully!');
+        return redirect('/products')->with('success', 'Product Berhasil Diupadate');
     }
 
     /**
@@ -111,6 +111,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        return redirect('/products')->with('success', 'Product Berhasil Dihapus');
     }
 }

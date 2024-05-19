@@ -19,7 +19,7 @@ use App\Http\Controllers\ProductCategoryController;
 
 Route::get('/', function () {
     return view('index',[
-        'products'=> Product::all()
+        'products'=> Product::with('category', 'brand')->get()
         ]);
 });
 Route::resource('brands', BrandController::class);

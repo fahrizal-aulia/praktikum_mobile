@@ -13,7 +13,9 @@ class BrandController extends Controller
      */
     public function index()
     {
-        //
+        return view('brand.index',[
+            'brands'=> Brand::all()
+            ]);
     }
 
     /**
@@ -21,7 +23,9 @@ class BrandController extends Controller
      */
     public function create()
     {
-        //
+        return view('brand.create',[
+            'brands'=> Brand::all()
+            ]);
     }
 
     /**
@@ -29,7 +33,13 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validasi = $request->validate([
+            'product_brand'=>'required',
+            'status' => 'required',
+            'deleted' => 'required'
+        ]);
+        Brand::create($validasi);
+        return redirect('brands')->with('success', 'Brand Telah Ditambahkan!');
     }
 
     /**
@@ -37,7 +47,7 @@ class BrandController extends Controller
      */
     public function show(Brand $brand)
     {
-        //
+        return view('brand.show',compact('brand'));
     }
 
     /**
@@ -45,7 +55,7 @@ class BrandController extends Controller
      */
     public function edit(Brand $brand)
     {
-        //
+        return view('brand.edit',compact('brand'));
     }
 
     /**
@@ -53,7 +63,13 @@ class BrandController extends Controller
      */
     public function update(Request $request, Brand $brand)
     {
-        //
+        $validasi = $request->validate([
+            'product_brand'=>'required',
+            'status' => 'required',
+            'deleted' => 'required'
+        ]);
+        $brand->update($validasi);
+        return redirect('brands')->with('success', 'Brand Telah DiUpdate!');
     }
 
     /**
@@ -61,6 +77,7 @@ class BrandController extends Controller
      */
     public function destroy(Brand $brand)
     {
-        //
+        $brand->delete();
+        return redirect('/brands')->with('success', 'Brand Berhasil Dihapus');
     }
 }

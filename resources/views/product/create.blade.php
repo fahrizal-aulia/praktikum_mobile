@@ -82,8 +82,8 @@
             <div class="mb-3">
                 <label for="status" class="form-label">Status</label>
                 <select class="form-select @error('status') is-invalid @enderror" id="status" name="status" required>
-                    <option value="available" {{ old('status') == 'Active' ? 'selected' : '' }}>Active</option>
-                    <option value="unavailable" {{ old('status') == 'Inactive' ? 'selected' : '' }}>Inactive</option>
+                    <option value="Active" {{ old('status') == 'Active' ? 'selected' : '' }}>Active</option>
+                    <option value="Inactive" {{ old('status') == 'Inactive' ? 'selected' : '' }}>Inactive</option>
                 </select>
                 @error('status')
                 <div class="invalid-feedback">
@@ -112,7 +112,7 @@
                 </div>
                 @enderror
             </div>
-            <button type="submit" class="btn btn-primary float-end">Add Product</button>
+            <button type="submit" class="btn btn-primary float-end mb-3">Add Product</button>
         </form>
     </div>
 </div>

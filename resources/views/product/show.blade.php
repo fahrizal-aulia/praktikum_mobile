@@ -13,7 +13,6 @@
             <p class="card-text">Category: {{ $product->category->product_category_name }}</p>
             <p class="card-text">Brand: {{ $product->brand->product_brand }}</p>
             <p class="card-text">Price: ${{ $product->product_price }}</p>
-            <!-- Button to go back -->
             <a href="/products/" class="btn btn-warning">Back</a>
         </div>
     </div>

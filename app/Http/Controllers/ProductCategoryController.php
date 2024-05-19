@@ -13,7 +13,10 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
-        //
+
+        return view('category.index',[
+            'brands'=> ProductCategory::all()
+            ]);
     }
 
     /**

@@ -5,8 +5,8 @@
     <h1 class="h2">Edit Produk</h1>
 </div>
 
-<div class="container">
-    <div class="col-md-8 mb-5 mx-auto">
+<div class="container pb-5 mb-5">
+    <div class="col-md-8 mb-5 mx-auto mb-5">
         <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
@@ -24,7 +24,7 @@
                 <select class="form-select @error('product_category') is-invalid @enderror" id="product_category" name="product_category" required>
                     @foreach($categories as $category)
                         <option value="{{ $category->id }}" {{ $product->product_category == $category->id ? 'selected' : '' }}>
-                            {{ $category->nama_kategori }}
+                            {{ $category->product_category_name }}
                         </option>
                     @endforeach
                 </select>
@@ -57,7 +57,7 @@
                 <select class="form-select @error('product_brand') is-invalid @enderror" id="product_brand" name="product_brand" required>
                     @foreach($brands as $brand)
                         <option value="{{ $brand->id }}" {{ $product->product_brand == $brand->id ? 'selected' : '' }}>
-                            {{ $brand->nama_brand }}
+                            {{ $brand->product_brand }}
                         </option>
                     @endforeach
                 </select>
@@ -83,8 +83,8 @@
             <div class="mb-3">
                 <label for="status" class="form-label">Status</label>
                 <select class="form-select @error('status') is-invalid @enderror" id="status" name="status" required>
-                    <option value="available" {{ $product->status == 'available' ? 'selected' : '' }}>Tersedia</option>
-                    <option value="unavailable" {{ $product->status == 'unavailable' ? 'selected' : '' }}>Tidak Tersedia</option>
+                    <option value="Actiive" {{ $product->status == 'Actiive' ? 'selected' : '' }}>Active</option>
+                    <option value="Inactiive" {{ $product->status == 'Inactiive' ? 'selected' : '' }}>Inactiive</option>
                 </select>
                 @error('status')
                 <div class="invalid-feedback">
@@ -95,8 +95,8 @@
             <div class="mb-3">
                 <label for="deleted" class="form-label">Dihapus</label>
                 <select class="form-select @error('deleted') is-invalid @enderror" id="deleted" name="deleted" required>
-                    <option value="false" {{ $product->deleted == 'false' ? 'selected' : '' }}>Tidak</option>
-                    <option value="true" {{ $product->deleted == 'true' ? 'selected' : '' }}>Ya</option>
+                    <option value="false" {{ $product->deleted == 'false' ? 'selected' : '' }}>False</option>
+                    <option value="true" {{ $product->deleted == 'true' ? 'selected' : '' }}>True</option>
                 </select>
                 @error('deleted')
                 <div class="invalid-feedback">
@@ -113,7 +113,7 @@
                 </div>
                 @enderror
             </div>
-            <button type="submit" class="btn btn-primary float-end">Perbarui Produk</button>
+            <button type="submit" class="btn btn-primary float-end mb-5 ">Perbarui Produk</button>
         </form>
     </div>
 </div>

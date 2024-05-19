@@ -7,14 +7,13 @@
 
 
 <div class="container">
-    <!-- Hero Section -->
     <section class="hero bg-light text-center py-5">
         <div class="container">
             <h1 class="display-4">Welcome to TokoOnline Uwp</h1>
         </div>
     </section>
 
-    <!-- Featured Products Section -->
+    <!-- Products Section -->
     <section class="products py-5">
         <div class="container">
             <h2 class="text-center mb-4">All Products</h2>
