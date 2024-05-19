@@ -3,7 +3,7 @@
 @section('container')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-5 pb-2 mb-3 border-bottom">
     <h1 class="h2">All category</h1>
-    <a href="/category/create" class="btn btn-primary mb-3">Add New category</a>
+    <a href="/product-categories/create" class="btn btn-primary mb-3">Add New category</a>
 </div>
 
 @if (session()->has('success'))
@@ -25,19 +25,19 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($categorys as $category)
+                @foreach ($category as $categories)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $category->product_category }}</td>
-                    <td>{{ $category->status }}</td>
+                    <td>{{ $categories->product_category_name }}</td>
+                    <td>{{ $categories->status }}</td>
                     <td>
-                        <a href="/categorys/{{ $category->id }}" class="badge bg-info">
+                        <a href="/product-categories/{{ $categories->id }}" class="badge bg-info">
                             <span data-feather="eye"></span>
                         </a>
-                        <a href="/categorys/{{ $category->id }}/edit" class="badge bg-warning">
+                        <a href="/product-categories/{{ $categories->id }}/edit" class="badge bg-warning">
                             <span data-feather="edit"></span>
                         </a>
-                        <form action="/categorys/{{ $category->id }}" method="POST" class="d-inline">
+                        <form action="/product-categories/{{ $categories->id }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
                             <button class="badge bg-danger border-0" onclick="return confirm('yakin menghapus data ini?')">

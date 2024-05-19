@@ -15,7 +15,7 @@ class ProductCategoryController extends Controller
     {
 
         return view('category.index',[
-            'brands'=> ProductCategory::all()
+            'category'=> ProductCategory::all()
             ]);
     }
 
@@ -24,7 +24,9 @@ class ProductCategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('category.create',[
+            'category'=> ProductCategory::all()
+            ]);
     }
 
     /**
@@ -32,7 +34,13 @@ class ProductCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validasi = $request->validate([
+            'product_category_name'=>'required',
+            'status' => 'required',
+            'deleted' => 'required'
+        ]);
+        ProductCategory::create($validasi);
+        return redirect('product-categories')->with('success', 'Category Telah Ditambahkan!');
     }
 
     /**
@@ -40,7 +48,7 @@ class ProductCategoryController extends Controller
      */
     public function show(ProductCategory $productCategory)
     {
-        //
+        return view('category.show',compact('productCategory'));
     }
 
     /**
@@ -48,7 +56,7 @@ class ProductCategoryController extends Controller
      */
     public function edit(ProductCategory $productCategory)
     {
-        //
+        return view('category.edit',compact('productCategory'));
     }
 
     /**
@@ -56,7 +64,13 @@ class ProductCategoryController extends Controller
      */
     public function update(Request $request, ProductCategory $productCategory)
     {
-        //
+        $validasi = $request->validate([
+            'product_category_name'=>'required',
+            'status' => 'required',
+            'deleted' => 'required'
+        ]);
+        $productCategory->update($validasi);
+        return redirect('product-categories')->with('success', 'Category Telah DiUpdate!');
     }
 
     /**
@@ -64,6 +78,7 @@ class ProductCategoryController extends Controller
      */
     public function destroy(ProductCategory $productCategory)
     {
-        //
+        $productCategory->delete();
+        return redirect('product-categories')->with('success', 'Brand Berhasil Dihapus');
     }
 }
